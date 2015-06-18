@@ -79,8 +79,6 @@ crashlytics-build.properties
 *.dex
 
 # Java class files
-*.class
-
 # Generated files
 bin/
 gen/

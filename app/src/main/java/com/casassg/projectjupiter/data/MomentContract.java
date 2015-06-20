@@ -56,5 +56,9 @@ public class MomentContract {
             return CONTENT_URI;
         }
 
+        public static String getIDFromUri(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
+
     }
 }

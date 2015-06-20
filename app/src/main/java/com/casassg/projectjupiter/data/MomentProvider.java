@@ -121,9 +121,22 @@ public class MomentProvider extends ContentProvider {
                 );
                 break;
             }
+            case MOMENT: {
+                retCursor = mDBHelper.getReadableDatabase().query(
+                        MomentContract.MomentEntry.TABLE_NAME,
+                        projection,
+                        "_id = ?",
+                        new String[]{MomentContract.MomentEntry.getIDFromUri(uri)},
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            }
 
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
+
         }
         retCursor.setNotificationUri(getContext().getContentResolver(), uri);
         return retCursor;

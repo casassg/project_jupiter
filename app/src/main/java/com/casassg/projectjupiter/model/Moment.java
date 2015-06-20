@@ -1,6 +1,7 @@
 package com.casassg.projectjupiter.model;
 
-import java.text.SimpleDateFormat;
+import com.casassg.projectjupiter.Utility;
+
 import java.util.Date;
 
 /**
@@ -73,7 +74,7 @@ public class Moment {
 
     @Override
     public String toString() {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        return title + " - " + format.format(date);
+
+        return title + " - " + Utility.formatDate(date);
     }
 }

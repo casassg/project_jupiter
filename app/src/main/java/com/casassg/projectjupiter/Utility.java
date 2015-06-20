@@ -11,6 +11,8 @@ import android.util.Log;
 import com.casassg.projectjupiter.data.MomentContract;
 import com.casassg.projectjupiter.model.Moment;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +24,13 @@ import java.util.List;
  */
 public class Utility {
 
+
     private static final String LOG = Utility.class.getSimpleName();
+
+    public static String formatDate(Date date) {
+        DateFormat format = SimpleDateFormat.getDateTimeInstance();
+        return format.format(date);
+    }
 
     public static Moment getMoment(Cursor cursor) {
         Moment ret = new Moment();

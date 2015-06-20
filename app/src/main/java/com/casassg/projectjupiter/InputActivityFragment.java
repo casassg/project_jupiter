@@ -42,6 +42,7 @@ public class InputActivityFragment extends Fragment {
     private void insertData() {
         Moment moment = extractMoment();
         Utility.saveMoment(moment, getActivity());
+        getActivity().finish();
     }
 
     private Moment extractMoment() {

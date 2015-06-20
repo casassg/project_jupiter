@@ -15,9 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.casassg.projectjupiter.data.MomentContract;
-import com.casassg.projectjupiter.model.Moment;
-
-import java.util.List;
 
 
 /**
@@ -28,7 +25,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     private static final int MOMENT_LOADER = 0;
 
     private ListView listView;
-    private List<Moment> momentList;
     private MomentAdapter mMomentAdapter;
 
     public MainActivityFragment() {
@@ -47,9 +43,9 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-                if (cursor != null) {
-                    long moment_id = getMomentID(position);
+                Cursor cursor = mMomentAdapter.getCursor();
+                if (cursor != null && cursor.moveToPosition(position)) {
+                    long moment_id = cursor.getLong(MomentContract.MomentEntry.COL_ID_IND);
                     Intent intent = new Intent(getActivity(), DetailActivity.class)
                             .setData(MomentContract.MomentEntry.buildMomentUri(moment_id));
                     startActivity(intent);
@@ -57,10 +53,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             }
         });
         return root;
-    }
-
-    private long getMomentID(int position) {
-        return momentList.get(position).getId();
     }
 
     @Override
@@ -84,7 +76,6 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        momentList = Utility.getMoments(data);
         mMomentAdapter.swapCursor(data);
     }
 

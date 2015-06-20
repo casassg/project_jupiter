@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Project Jupiter</string>
+    <string name="app_name">CaptureMe</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_input">InputActivity</string>
+    <string name="title_activity_input">Capture new moment</string>
     <string name="ratingTitle">Moment rating</string>
-    <string name="moment_capture">Capture moment</string>
+    <string name="moment_capture">Capture</string>
     <string name="hint_title">Moment title</string>
 </resources>

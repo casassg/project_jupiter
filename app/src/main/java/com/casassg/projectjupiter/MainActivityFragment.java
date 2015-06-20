@@ -58,7 +58,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Uri momentUri = MomentContract.MomentEntry.buildMomentUri();
-        String sortOrder = MomentContract.MomentEntry.COL_DATE + " ASC";
+        String sortOrder = MomentContract.MomentEntry.COL_DATE + " DESC";
         return new CursorLoader(getActivity(),
                 momentUri,
                 MomentContract.MomentEntry.MOMENT_COLUMNS,

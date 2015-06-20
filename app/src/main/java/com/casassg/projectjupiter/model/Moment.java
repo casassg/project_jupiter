@@ -1,5 +1,6 @@
 package com.casassg.projectjupiter.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -13,6 +14,22 @@ public class Moment {
     private double x_coord;
     private double y_coord;
     private Date date;
+    private long id;
+
+    public Moment() {
+        date = new Date();
+        id = -1;
+        x_coord = -1;
+        y_coord = -1;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public Date getDate() {
         return date;
@@ -52,5 +69,11 @@ public class Moment {
 
     public void setX_coord(double x_coord) {
         this.x_coord = x_coord;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return title + " - " + format.format(date);
     }
 }

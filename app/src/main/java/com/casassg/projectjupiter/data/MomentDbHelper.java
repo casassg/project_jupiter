@@ -23,11 +23,11 @@ public class MomentDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_MOMENT_TABLE =
                 "CREATE TABLE " + MomentContract.MomentEntry.TABLE_NAME + " (" +
                         MomentContract.MomentEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        MomentContract.MomentEntry.COL_TITLE + " TEXT NOT NULL " +
-                        MomentContract.MomentEntry.COL_RATING + "INTEGER NOT NULL" +
-                        MomentContract.MomentEntry.COL_COORD_X + "REAL NULL " +
-                        MomentContract.MomentEntry.COL_COORD_Y + "REAL NULL " +
-                        MomentContract.MomentEntry.COL_DATE + "INTEGER DEFAULT (strftime('%s','now'))" +
+                        MomentContract.MomentEntry.COL_TITLE + " TEXT NOT NULL, " +
+                        MomentContract.MomentEntry.COL_RATING + " REAL NOT NULL, " +
+                        MomentContract.MomentEntry.COL_COORD_X + " REAL NULL, " +
+                        MomentContract.MomentEntry.COL_COORD_Y + " REAL NULL, " +
+                        MomentContract.MomentEntry.COL_DATE + " INTEGER DEFAULT (strftime('%s','now'))" +
                         ");";
         db.execSQL(SQL_CREATE_MOMENT_TABLE);
     }

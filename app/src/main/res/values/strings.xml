@@ -15,4 +15,7 @@
     <string name="title">Title</string>
     <string name="share_moment">Share</string>
     <string name="delete_moment">Delete</string>
+    <string name="no_moment_selected">No moment selected</string>
+    <string name="select_moment">Select a moment to view it</string>
+    <string name="successfully_deleted">Succesfully deleted</string>
 </resources>

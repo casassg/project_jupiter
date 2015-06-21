@@ -1,6 +1,5 @@
 package com.casassg.projectjupiter;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,8 +25,17 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     private ListView listView;
     private MomentAdapter mMomentAdapter;
+    private int mPosition;
+    private static final String SELECTED_KEY = "selected_position";
 
     public MainActivityFragment() {
+    }
+
+    public interface Callback {
+        /**
+         * DetailFragmentCallback for when an item has been selected.
+         */
+        public void onItemSelected(long id);
     }
 
     @Override
@@ -46,10 +54,10 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 Cursor cursor = mMomentAdapter.getCursor();
                 if (cursor != null && cursor.moveToPosition(position)) {
                     long moment_id = cursor.getLong(MomentContract.MomentEntry.COL_ID_IND);
-                    Intent intent = new Intent(getActivity(), DetailActivity.class)
-                            .setData(MomentContract.MomentEntry.buildMomentUri(moment_id));
-                    startActivity(intent);
+                    ((Callback)getActivity())
+                            .onItemSelected(moment_id);
                 }
+                mPosition = position;
             }
         });
         return root;
@@ -77,6 +85,22 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mMomentAdapter.swapCursor(data);
+        if (mPosition != ListView.INVALID_POSITION) {
+            // If we don't need to restart the loader, and there's a desired position to restore
+            // to, do so now.
+            listView.smoothScrollToPosition(mPosition);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        // When tablets rotate, the currently selected list item needs to be saved.
+        // When no item is selected, mPosition will be set to Listview.INVALID_POSITION,
+        // so check for that before storing.
+        if (mPosition != ListView.INVALID_POSITION) {
+            outState.putInt(SELECTED_KEY, mPosition);
+        }
+        super.onSaveInstanceState(outState);
     }
 
     @Override

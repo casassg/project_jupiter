@@ -8,10 +8,10 @@ import android.view.View;
 import android.widget.ListView;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity  implements MainActivityFragment.Callback{
 
     private ListView listView;
-    private boolean mTwoPane;
+    public boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,4 +51,23 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+    @Override
+    public void onItemSelected(long id) {
+        if(mTwoPane) {
+            Bundle args = new Bundle();
+            args.putLong(DetailActivity.ID_KEY, id);
+
+            DetailActivityFragment fragment = new DetailActivityFragment();
+            fragment.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.moment_detail_container, fragment)
+                    .commit();
+
+        } else {
+            Intent intent = new Intent(this, DetailActivity.class)
+                    .putExtra(DetailActivity.ID_KEY,id);
+            startActivity(intent);
+        }
+    }
 }

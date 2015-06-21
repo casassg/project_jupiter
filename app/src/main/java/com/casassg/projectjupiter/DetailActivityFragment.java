@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.casassg.projectjupiter.data.MomentContract;
 import com.casassg.projectjupiter.model.Moment;
@@ -33,6 +34,8 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
     private static final String LOG_TAG = DetailActivityFragment.class.getSimpleName();
     private View root;
     private Moment moment;
+    private long moment_id;
+    private boolean mEmpty;
 
     public DetailActivityFragment() {
     }
@@ -40,14 +43,37 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_detail, container, false);
+
+        Bundle arguments = getArguments();
+        updateEmpty(arguments);
+
+        if(mEmpty) {
+            root = inflater.inflate(R.layout.empty_message, container, false);
+        } else {
+            root = inflater.inflate(R.layout.fragment_detail, container, false);
+        }
+
         setHasOptionsMenu(true);
         return root;
     }
 
+    private void updateEmpty(Bundle arguments) {
+        if (arguments != null) {
+            moment_id = arguments.getLong(DetailActivity.ID_KEY);
+            if(moment_id<0) {
+                mEmpty = true;
+            } else {
+                mEmpty = false;
+            }
+        } else {
+            mEmpty = true;
+        }
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_detail, menu);
+        if(!mEmpty)
+            inflater.inflate(R.menu.menu_detail, menu);
     }
 
     @Override
@@ -62,12 +88,26 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
                 return true;
             case R.id.delete:
                 Utility.deleteMoment(moment,getActivity());
-                getActivity().finish();
+                Toast.makeText(getActivity(),R.string.successfully_deleted,Toast.LENGTH_SHORT).show();
+                if(getActivity().findViewById(R.id.myFAB)==null)
+                    getActivity().finish();
+                else
+                    ((MainActivityFragment.Callback)getActivity()).onItemSelected(-1);
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Bundle arguments = getArguments();
+        updateEmpty(arguments);
+        if (!mEmpty) {
+            getLoaderManager().restartLoader(DETAIL_LOADER, null, this);
+
+        }
+    }
 
 
     @Override
@@ -79,16 +119,14 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Log.v(LOG_TAG, "In onCreateLoader");
-        Intent intent = getActivity().getIntent();
-        if (intent == null || intent.getData()==null) {
+        if(mEmpty )
             return null;
-        }
 
         // Now create and return a CursorLoader that will take care of
         // creating a Cursor for the data being displayed.
         return new CursorLoader(
                 getActivity(),
-                intent.getData(),
+                MomentContract.MomentEntry.buildMomentUri(moment_id),
                 MomentContract.MomentEntry.MOMENT_COLUMNS,
                 null,
                 null,

@@ -13,6 +13,6 @@
     <string name="location_request_title">Location disabled</string>
     <string name="location_request_message">Please enable location to submit a new moment</string>
     <string name="title">Title</string>
-    <string name="share_moment">Share moment</string>
+    <string name="share_moment">Share</string>
     <string name="delete_moment">Delete</string>
 </resources>

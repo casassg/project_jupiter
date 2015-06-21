@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBarActivity;
 
 public class DetailActivity extends ActionBarActivity {
 
+    public static final String URI_KEY = "uri_key";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

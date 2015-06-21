@@ -1,12 +1,18 @@
 <resources>
-    <string name="app_name">CaptureMe</string>
+    <string name="app_name">MomentMe</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_detail">Moment</string>
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_input">Capture new moment</string>
-    <string name="ratingTitle">Moment rating</string>
-    <string name="moment_capture">Capture</string>
+    <string name="title_activity_input">New moment</string>
+    <string name="ratingTitle">Rating</string>
+    <string name="moment_capture">Moment this</string>
     <string name="hint_title">Moment title</string>
+    <string name="date_title">Date and Time</string>
+    <string name="location_request_title">Location disabled</string>
+    <string name="location_request_message">Please enable location to submit a new moment</string>
+    <string name="title">Title</string>
+    <string name="share_moment">Share moment</string>
+    <string name="delete_moment">Delete</string>
 </resources>

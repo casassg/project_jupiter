@@ -1,8 +1,10 @@
 package com.casassg.projectjupiter;
 
+import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -88,12 +90,34 @@ public class Utility {
         return momentID;
     }
 
-    private Intent createShareMomentIntent(String share, String hashtag) {
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, share + hashtag);
-        return shareIntent;
+    public static int deleteMoment(Moment moment, Context context) {
+        int result = context.getContentResolver().delete(
+                MomentContract.MomentEntry.buildMomentUri(moment.getId()),
+                null,
+                null
+                );
+
+
+        return result;
+
     }
+
+
+    public static void showLocationDialog(final Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(R.string.location_request_title);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent settings = new Intent("com.google.android.gms.location.settings.GOOGLE_LOCATION_SETTINGS");
+                context.startActivity(settings);
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, null);
+        builder.setMessage(R.string.location_request_message);
+        builder.create().show();
+    }
+
+
 }
 

@@ -13,6 +13,7 @@ public class MomentProvider extends ContentProvider {
     static final int MOMENT = 100;
     static final int MOMENTS = 101;
     private static final UriMatcher sUriMatcher = buildUriMatcher();
+    public static final String SELECTION_ID = "_id = ?";
     private MomentDbHelper mDBHelper;
 
     public MomentProvider() {
@@ -44,9 +45,11 @@ public class MomentProvider extends ContentProvider {
         // this makes delete all rows return the number of rows deleted
         if (null == selection) selection = "1";
         switch (match) {
-            case MOMENTS:
+            case MOMENT:
                 rowsDeleted = db.delete(
-                        MomentContract.MomentEntry.TABLE_NAME, selection, selectionArgs);
+                        MomentContract.MomentEntry.TABLE_NAME,
+                        SELECTION_ID,
+                        getSelectionIdArgsFromUri(uri));
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -125,8 +128,8 @@ public class MomentProvider extends ContentProvider {
                 retCursor = mDBHelper.getReadableDatabase().query(
                         MomentContract.MomentEntry.TABLE_NAME,
                         projection,
-                        "_id = ?",
-                        new String[]{MomentContract.MomentEntry.getIDFromUri(uri)},
+                        SELECTION_ID,
+                        getSelectionIdArgsFromUri(uri),
                         null,
                         null,
                         sortOrder
@@ -140,6 +143,10 @@ public class MomentProvider extends ContentProvider {
         }
         retCursor.setNotificationUri(getContext().getContentResolver(), uri);
         return retCursor;
+    }
+
+    private String[] getSelectionIdArgsFromUri(Uri uri) {
+        return new String[]{MomentContract.MomentEntry.getIDFromUri(uri)};
     }
 
     @Override

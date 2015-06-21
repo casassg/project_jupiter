@@ -27,14 +27,6 @@
                 android:value="com.casassg.projectjupiter.MainActivity" />
         </activity>
         <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.casassg.projectjupiter.MainActivity" />
-        </activity>
-        <activity
             android:name=".InputActivity"
             android:label="@string/title_activity_input"
             android:parentActivityName=".MainActivity">

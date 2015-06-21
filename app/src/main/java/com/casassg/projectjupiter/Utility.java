@@ -15,9 +15,7 @@ import com.casassg.projectjupiter.model.Moment;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by casassg on 19/06/15.
@@ -44,15 +42,6 @@ public class Utility {
         ret.setRating(cursor.getDouble(MomentContract.MomentEntry.COL_RATING_IND));
         ret.setId(cursor.getLong(MomentContract.MomentEntry.COL_ID_IND));
         return ret;
-    }
-
-    public static List<Moment> getMoments(Cursor data) {
-        List<Moment> moments = new ArrayList<>();
-        while (data.moveToNext()) {
-            moments.add(getMoment(data));
-        }
-        Log.d(LOG, "Loaded " + moments.size() + " moments");
-        return moments;
     }
 
     public static long saveMoment(Moment moment, Context context) {
@@ -84,7 +73,7 @@ public class Utility {
             );
             momentID = ContentUris.parseId(insertedUri);
 
-            Log.d(LOG, "Saved new moment " + momentID);
+            Log.i(LOG, "Saved new moment " + momentID);
         }
         momentCursor.close();
         return momentID;

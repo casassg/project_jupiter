@@ -176,7 +176,7 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             getActivity().startActivity(intent);
         } else {
-            Log.d(LOG_TAG, "Couldn't call " + location + ", no receiving apps installed!");
+            Log.e(LOG_TAG, "Couldn't call " + location + ", no receiving apps installed!");
         }
     }
 
@@ -191,6 +191,6 @@ public class DetailActivityFragment extends Fragment implements LoaderManager.Lo
     }
 
     public String getShareString() {
-        return "I would like to share a moment with you: " + moment.getTitle() + " (" +Utility.formatDate(moment.getDate()) +")";
+        return getResources().getString(R.string.share_string) + moment.getTitle() + " (" + Utility.formatDate(moment.getDate()) + ")";
     }
 }
